@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratório de Informática — Guia para Professores</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Identidade Visual SED-SC / Governo de Santa Catarina */
+    --azul-sc: #003DA5;
+    --azul-medio: #0055C8;
+    --azul-claro: #E8EEF9;
+    --verde-sc: #007A4D;
+    --verde-claro: #1a9960;
+    --verde-suave: #E6F4EE;
+    --amarelo: #FFD100;
+    --cinza-escuro: #1A1A2E;
+    --cinza-medio: #555;
+    --cinza-claro: #F4F6FA;
+    --branco: #ffffff;
+    --sombra: 0 4px 24px rgba(0,61,165,0.09);
+    --sombra-hover: 0 8px 32px rgba(0,61,165,0.16);
+    --radius: 14px;
+
+    /* aliases internos */
+    --verde: var(--verde-sc);
+    --azul: var(--azul-sc);
+    --roxo: #5048a3;
+    --rosa: #b84f7a;
+    --laranja: #d97a3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--cinza-claro);
+    color: var(--cinza-escuro);
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--azul-sc);
+    color: white;
+    padding: 0 0 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Faixa institucional topo */
+  .hero-topo {
+    background: #002680;
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    letter-spacing: 0.4px;
+    opacity: 0.95;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .hero-topo-left { display: flex; align-items: center; gap: 10px; }
+  .sc-bandeira {
+    width: 32px; height: 22px;
+    background: linear-gradient(to bottom, #009B3A 33%, #FEDF00 33%, #FEDF00 66%, #009B3A 66%);
+    border-radius: 2px;
+    border: 1px solid rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+  .hero-main {
+    padding: 50px 40px 50px;
+    position: relative;
+  }
+  .hero-main::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .hero-main::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 15%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,209,0,0.1);
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    background: var(--amarelo);
+    color: #1A1A2E;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--amarelo);
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    opacity: 0.88;
+    max-width: 560px;
+    font-weight: 300;
+  }
+  .hero-escola {
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    font-size: 0.88rem;
+    opacity: 0.8;
+    letter-spacing: 0.3px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .hero-escola strong { opacity: 1; font-size: 1rem; }
+
+  /* NAV */
+  .nav-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    border-bottom: 1px solid #e8e8e5;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .nav {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    flex-shrink: 0;
+    padding: 14px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--cinza-medio);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { color: var(--azul-sc); }
+  .nav-btn.active { color: var(--azul-sc); border-bottom-color: var(--azul-sc); font-weight: 600; }
+
+  /* MAIN */
+  main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  /* SECTIONS */
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* INTRO CARDS */
+  .intro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .intro-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    box-shadow: var(--sombra);
+    border-top: 4px solid var(--azul-sc);
+  }
+  .intro-card .icon { font-size: 2rem; margin-bottom: 12px; }
+  .intro-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+  .intro-card p { font-size: 0.88rem; color: var(--cinza-medio); }
+
+  /* BNCC CARD */
+  .bncc-block {
+    background: linear-gradient(135deg, #002070 0%, #003DA5 100%);
+    border-radius: var(--radius);
+    padding: 36px;
+    color: white;
+    margin-bottom: 32px;
+  }
+  .bncc-block h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.5rem;
+    margin-bottom: 14px;
+    color: var(--amarelo);
+  }
+  .bncc-block p { font-size: 0.95rem; opacity: 0.9; margin-bottom: 20px; }
+  .bncc-pillars {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .pillar {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .pillar span { margin-right: 6px; }
+
+  /* RECURSOS COMO USAR */
+  .recursos-equip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .equip-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--sombra);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .equip-icon { font-size: 2.4rem; }
+  .equip-card h3 { font-size: 1rem; font-weight: 600; }
+  .equip-card p { font-size: 0.87rem; color: var(--cinza-medio); }
+
+  /* DISCIPLINA HEADER */
+  .disc-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .disc-emoji { font-size: 3rem; }
+  .disc-header h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  .disc-header p { font-size: 0.95rem; color: var(--cinza-medio); }
+
+  /* RECURSOS LISTA */
+  .recursos-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+
+  .recurso-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--sombra);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: 16px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .recurso-card:hover {
+    box-shadow: var(--sombra-hover);
+    transform: translateY(-2px);
+  }
+  .recurso-tipo {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 50px;
+    white-space: nowrap;
+  }
+  .tipo-site { background: #e8f4fd; color: #2a6fa8; }
+  .tipo-simulador { background: #fdf0e8; color: #c05a1f; }
+  .tipo-plataforma { background: #f0e8fd; color: #6c4fa3; }
+  .tipo-video { background: #fde8f0; color: #c94f7a; }
+  .tipo-ferramenta { background: #e8fdf0; color: #1a6b4a; }
+  .tipo-jogo { background: #fdf8e8; color: #9a6f00; }
+
+  .recurso-nome { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+  .recurso-desc { font-size: 0.88rem; color: var(--cinza-medio); }
+  .recurso-link { font-size: 0.8rem; color: var(--verde-claro); font-weight: 500; }
+  .recurso-etapas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .etapa-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 50px;
+    background: var(--verde-suave);
+    color: var(--verde);
+  }
+
+  .seta { font-size: 1.2rem; color: #ccc; align-self: center; }
+
+  /* ATIVIDADE */
+  .atividade-box {
+    background: var(--amarelo);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  .atividade-box h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--cinza-escuro);
+  }
+  .atividade-box p { font-size: 0.92rem; color: #333; }
+
+  /* BNCC CONNECTION */
+  .bncc-conn {
+    background: var(--verde-suave);
+    border-left: 4px solid var(--verde);
+    border-radius: 0 12px 12px 0;
+    padding: 18px 22px;
+    margin-bottom: 40px;
+    font-size: 0.9rem;
+    color: var(--verde);
+    font-weight: 500;
+  }
+
+  /* COMO AGENDAR */
+  .agendar-box {
+    background: white;
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--sombra);
+    margin-bottom: 24px;
+  }
+  .agendar-box h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    color: var(--verde);
+  }
+  .steps { display: flex; flex-direction: column; gap: 14px; }
+  .step { display: flex; align-items: flex-start; gap: 14px; }
+  .step-num {
+    width: 32px; height: 32px; min-width: 32px;
+    background: var(--verde);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 700;
+  }
+  .step p { font-size: 0.92rem; padding-top: 4px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--cinza-escuro);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.85rem;
+  }
+  footer strong { color: white; }
+  .footer-bandeira {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .footer-sc-label {
+    font-size: 0.78rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--cinza-escuro);
+  }
+
+  .hero-top-row {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+  .hero-logo-wrap {
+    flex-shrink: 0;
+  }
+  .logo-escola {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.3);
+    object-fit: cover;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+  .hero-texto { flex: 1; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 50px 24px 40px; }
+    .recurso-card { grid-template-columns: 1fr; }
+    .seta { display: none; }
+    .hero-top-row { flex-direction: column; gap: 20px; }
+    .logo-escola { width: 90px; height: 90px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-main">
+    <div class="hero-inner">
+      <div class="hero-top-row">
+        <div class="hero-logo-wrap">
+          <img src="data:image/jpeg;base64,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" alt="Logo EEB Getúlio Vargas" class="logo-escola">
+        </div>
+        <div class="hero-texto">
+          <span class="hero-tag">🖥️ Laboratório de Informática</span>
+          <h1>O laboratório é<br><em>aliado da sua aula.</em></h1>
+          <p class="hero-sub">Um guia prático para professores descobrirem como os recursos digitais podem tornar o aprendizado mais rico, visual e significativo — em todas as disciplinas.</p>
+          <div class="hero-escola">
+            <strong>Escola de Educação Básica Getúlio Vargas</strong>
+            <span>Rede Estadual de Santa Catarina · Ensino Fundamental e Médio</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<div class="nav-wrapper">
+  <nav class="nav" id="nav">
+    <button class="nav-btn active" onclick="showSection('apresentacao', this)">🏠 Início</button>
+    <button class="nav-btn" onclick="showSection('matematica', this)">📐 Matemática</button>
+    <button class="nav-btn" onclick="showSection('ciencias', this)">🔬 Ciências</button>
+    <button class="nav-btn" onclick="showSection('portugues', this)">📖 Português</button>
+    <button class="nav-btn" onclick="showSection('historia', this)">🏛️ História</button>
+    <button class="nav-btn" onclick="showSection('geografia', this)">🌍 Geografia</button>
+    <button class="nav-btn" onclick="showSection('ingles', this)">🇬🇧 Inglês</button>
+    <button class="nav-btn" onclick="showSection('artes', this)">🎨 Artes</button>
+    <button class="nav-btn" onclick="showSection('edufisica', this)">⚽ Ed. Física</button>
+    <button class="nav-btn" onclick="showSection('religioso', this)">🙏 Ens. Religioso</button>
+    <button class="nav-btn" onclick="showSection('sociologia', this)">🏛️ Sociologia</button>
+    <button class="nav-btn" onclick="showSection('agendar', this)">📅 Agendar</button>
+  </nav>
+</div>
+
+<main>
+
+  <!-- APRESENTAÇÃO -->
+  <section class="section active" id="apresentacao">
+    <div class="bncc-block">
+      <h2>O que é a BNCC da Computação?</h2>
+      <p>Em 2023, o Ministério da Educação homologou o <strong>Complemento à BNCC para Computação</strong>, tornando o ensino de tecnologia parte oficial da educação básica brasileira. Isso significa que a computação não é mais uma disciplina isolada: ela <em>atravessa todas as áreas do conhecimento</em>.</p>
+      <p>O documento organiza o ensino de computação em três grandes eixos, presentes em todas as etapas — da Educação Infantil ao Ensino Médio:</p>
+      <div class="bncc-pillars">
+        <div class="pillar"><span>🧠</span> Pensamento Computacional</div>
+        <div class="pillar"><span>🌐</span> Mundo Digital</div>
+        <div class="pillar"><span>💡</span> Cultura Digital</div>
+      </div>
+      <p style="margin-top: 18px; font-size: 0.88rem; opacity: 0.8;">Ao usar o laboratório de informática junto à sua disciplina, você está contribuindo diretamente para o desenvolvimento dessas competências nos alunos — de forma integrada e contextualizada.</p>
+    </div>
+
+    <h2 class="section-title">O que o laboratório oferece?</h2>
+    <div class="recursos-equip">
+      <div class="equip-card">
+        <div class="equip-icon">💻</div>
+        <h3>Computadores e Notebooks</h3>
+        <p>Acesso à internet, editores de texto, planilhas, apresentações e uma infinidade de plataformas educacionais gratuitas.</p>
+      </div>
+      <div class="equip-card">
+        <div class="equip-icon">📱</div>
+        <h3>Tablets</h3>
+        <p>Ideais para atividades de leitura interativa, uso de aplicativos educativos e criação de conteúdo multimídia.</p>
+      </div>
+      <div class="equip-card">
+        <div class="equip-icon">📺</div>
+        <h3>Projetor / TV Interativa</h3>
+        <p>Perfeito para exibições coletivas, vídeos, demonstrações ao vivo e discussões em grupo com suporte visual.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">Como usar esta cartilha?</h2>
+    <div class="intro-grid">
+      <div class="intro-card">
+        <div class="icon">1️⃣</div>
+        <h3>Escolha sua disciplina</h3>
+        <p>Clique na aba do componente curricular que você leciona no menu acima.</p>
+      </div>
+      <div class="intro-card">
+        <div class="icon">2️⃣</div>
+        <h3>Explore os recursos</h3>
+        <p>Veja os sites, plataformas e ferramentas indicados e a sugestão de atividade prática.</p>
+      </div>
+      <div class="intro-card">
+        <div class="icon">3️⃣</div>
+        <h3>Agende o laboratório</h3>
+        <p>Fale com o professor orientador de tecnologias para reservar o espaço e planejar juntos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATEMÁTICA -->
+  <section class="section" id="matematica">
+    <div class="disc-header">
+      <div class="disc-emoji">📐</div>
+      <div>
+        <h2>Matemática</h2>
+        <p>Visualize funções, treine operações e torne o abstrato concreto.</p>
+      </div>
+    </div>
+
+    <div class="recursos-list">
+      <div class="recurso-card" onclick="window.open('https://pt.khanacademy.org','_blank')">
+        <span class="recurso-tipo tipo-plataforma">Plataforma</span>
+        <div>
+          <div class="recurso-nome">Khan Academy</div>
+          <div class="recurso-desc">Videoaulas, exercícios adaptativos e trilhas de aprendizagem personalizadas cobrindo toda a matemática do fundamental ao médio. Gratuita e em português.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">pt.khanacademy.org</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.geogebra.org','_blank')">
+        <span class="recurso-tipo tipo-simulador">Simulador</span>
+        <div>
+          <div class="recurso-nome">GeoGebra</div>
+          <div class="recurso-desc">Ferramenta interativa para geometria, álgebra, funções e gráficos. Os alunos manipulam figuras e veem as mudanças em tempo real — ideal para geometria plana, funções e trigonometria.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">geogebra.org</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://phet.colorado.edu/pt_BR/','_blank')">
+        <span class="recurso-tipo tipo-simulador">Simulador</span>
+        <div>
+          <div class="recurso-nome">PhET – Simulações Matemáticas</div>
+          <div class="recurso-desc">Simuladores interativos da Universidade do Colorado para frações, álgebra, probabilidade e muito mais. Interface lúdica, em português e gratuito.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span></div>
+          <div class="recurso-link">phet.colorado.edu/pt_BR</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.matific.com/br/pt-br/','_blank')">
+        <span class="recurso-tipo tipo-jogo">Jogo Educativo</span>
+        <div>
+          <div class="recurso-nome">Matific</div>
+          <div class="recurso-desc">Plataforma gamificada de matemática com atividades lúdicas e interativas. Muito eficaz nos Anos Iniciais para fixação de operações básicas, geometria e medidas.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span></div>
+          <div class="recurso-link">matific.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+    </div>
+
+    <div class="atividade-box">
+      <h3>💡 Sugestão de Atividade</h3>
+      <p><strong>Geometria ao Vivo com GeoGebra:</strong> Proponha que os alunos construam figuras geométricas no GeoGebra e explorem como mudam os ângulos e áreas ao arrastar os vértices. Discuta as observações em grupo com a TV interativa. Conecta com: triângulos, quadriláteros, circunferência.</p>
+    </div>
+
+    <div class="bncc-conn">
+      🔗 <strong>Conexão BNCC Computação:</strong> Uso de simuladores desenvolve Pensamento Computacional (algoritmos e decomposição de problemas) e Mundo Digital (uso de ferramentas digitais para exploração matemática).
+    </div>
+  </section>
+
+  <!-- CIÊNCIAS -->
+  <section class="section" id="ciencias">
+    <div class="disc-header">
+      <div class="disc-emoji">🔬</div>
+      <div>
+        <h2>Ciências / Física / Química / Biologia</h2>
+        <p>Torne o invisível visível com laboratórios virtuais e simulações.</p>
+      </div>
+    </div>
+
+    <div class="recursos-list">
+      <div class="recurso-card" onclick="window.open('https://phet.colorado.edu/pt_BR/','_blank')">
+        <span class="recurso-tipo tipo-simulador">Simulador</span>
+        <div>
+          <div class="recurso-nome">PhET Interactive Simulations</div>
+          <div class="recurso-desc">O melhor laboratório virtual gratuito do mundo, da Universidade do Colorado. Simula átomos, moléculas, circuitos elétricos, leis de Newton, estados da matéria, reações químicas e muito mais. Em português, sem instalação.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">phet.colorado.edu/pt_BR</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.bdc.ib.unicamp.br/','_blank')">
+        <span class="recurso-tipo tipo-site">Site</span>
+        <div>
+          <div class="recurso-nome">Biblioteca Digital de Ciências – Unicamp</div>
+          <div class="recurso-desc">Repositório com animações, vídeos e experimentos virtuais de biologia, química e física, produzidos pela Unicamp. Conteúdo científico de alta qualidade e gratuito.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">bdc.ib.unicamp.br</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://pt.khanacademy.org/science','_blank')">
+        <span class="recurso-tipo tipo-plataforma">Plataforma</span>
+        <div>
+          <div class="recurso-nome">Khan Academy – Ciências</div>
+          <div class="recurso-desc">Cobertura completa de biologia, química e física com videoaulas e exercícios. Explica de forma visual conceitos como fotossíntese, tabela periódica, leis de Newton e muito mais.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">pt.khanacademy.org</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.educapes.capes.gov.br','_blank')">
+        <span class="recurso-tipo tipo-site">Repositório</span>
+        <div>
+          <div class="recurso-nome">EduCAPES</div>
+          <div class="recurso-desc">Portal da CAPES com animações, objetos de aprendizagem e vídeos para ciências produzidos por universidades públicas brasileiras. Pesquise por tema e etapa.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">educapes.capes.gov.br</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+    </div>
+
+    <div class="atividade-box">
+      <h3>💡 Sugestão de Atividade</h3>
+      <p><strong>Construindo Átomos no PhET:</strong> Use a simulação "Construindo Átomos" do PhET para que os alunos montem diferentes elementos e descubram prótons, nêutrons e elétrons. Projetar na TV e pedir que cada grupo monte um elemento e apresente para a turma. Ideal para tornar o modelo atômico menos abstrato.</p>
+    </div>
+
+    <div class="bncc-conn">
+      🔗 <strong>Conexão BNCC Computação:</strong> Laboratórios virtuais desenvolvem Pensamento Computacional (simulação e modelagem) e Cultura Digital (uso crítico de tecnologias para investigação científica).
+    </div>
+  </section>
+
+  <!-- PORTUGUÊS -->
+  <section class="section" id="portugues">
+    <div class="disc-header">
+      <div class="disc-emoji">📖</div>
+      <div>
+        <h2>Língua Portuguesa</h2>
+        <p>Leitura, escrita, produção textual e análise linguística com suporte digital.</p>
+      </div>
+    </div>
+
+    <div class="recursos-list">
+      <div class="recurso-card" onclick="window.open('https://www.normaculta.com.br','_blank')">
+        <span class="recurso-tipo tipo-site">Site</span>
+        <div>
+          <div class="recurso-nome">Norma Culta</div>
+          <div class="recurso-desc">Portal especializado em gramática, ortografia e redação. Ótimo para consultas durante atividades de produção de texto. Os alunos podem pesquisar dúvidas de ortografia, concordância e pontuação de forma autônoma.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">normaculta.com.br</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.dominiopublico.gov.br','_blank')">
+        <span class="recurso-tipo tipo-site">Biblioteca</span>
+        <div>
+          <div class="recurso-nome">Domínio Público (MEC)</div>
+          <div class="recurso-desc">Biblioteca digital gratuita do MEC com obras literárias nacionais e internacionais, incluindo Machado de Assis, José de Alencar, Monteiro Lobato e muitos outros. Acesso livre a textos completos.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">dominiopublico.gov.br</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.canva.com','_blank')">
+        <span class="recurso-tipo tipo-ferramenta">Ferramenta</span>
+        <div>
+          <div class="recurso-nome">Canva (versão educação)</div>
+          <div class="recurso-desc">Plataforma de design para criar jornais escolares, cartazes, infográficos e apresentações. Excelente para atividades de produção textual com finalidade comunicativa real — os alunos escrevem para publicar.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">canva.com/education</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.wordwall.net/pt','_blank')">
+        <span class="recurso-tipo tipo-jogo">Jogo Educativo</span>
+        <div>
+          <div class="recurso-nome">Wordwall</div>
+          <div class="recurso-desc">Crie quizzes, palavras cruzadas, caça-palavras e outros jogos sobre conteúdos de português: classes gramaticais, ortografia, interpretação de texto. Os alunos jogam no computador ou tablet.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span></div>
+          <div class="recurso-link">wordwall.net/pt</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+    </div>
+
+    <div class="atividade-box">
+      <h3>💡 Sugestão de Atividade</h3>
+      <p><strong>Jornal Escolar Digital:</strong> Propor que os alunos produzam reportagens ou artigos de opinião sobre temas da escola usando o Canva. O professor orienta a estrutura textual e os alunos publicam o resultado. Desenvolve escrita, pesquisa e letramento digital simultaneamente.</p>
+    </div>
+
+    <div class="bncc-conn">
+      🔗 <strong>Conexão BNCC Computação:</strong> Produção de conteúdo digital desenvolve Cultura Digital (autoria, ética e comunicação digital) e Mundo Digital (uso de ferramentas para criação e publicação).
+    </div>
+  </section>
+
+  <!-- HISTÓRIA -->
+  <section class="section" id="historia">
+    <div class="disc-header">
+      <div class="disc-emoji">🏛️</div>
+      <div>
+        <h2>História</h2>
+        <p>Visite museus, explore documentos e mergulhe em outras épocas.</p>
+      </div>
+    </div>
+
+    <div class="recursos-list">
+      <div class="recurso-card" onclick="window.open('https://artsandculture.google.com/?hl=pt-BR','_blank')">
+        <span class="recurso-tipo tipo-site">Museu Virtual</span>
+        <div>
+          <div class="recurso-nome">Google Arts & Culture</div>
+          <div class="recurso-desc">Acesso a museus, obras de arte e monumentos históricos do mundo inteiro em alta resolução. Inclui tour virtual em museus como o Louvre e o Museu Nacional do Rio de Janeiro. Perfeito para contextualizar períodos históricos visualmente.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">artsandculture.google.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.todamateria.com.br/historia/','_blank')">
+        <span class="recurso-tipo tipo-site">Site</span>
+        <div>
+          <div class="recurso-nome">Toda Matéria – História</div>
+          <div class="recurso-desc">Conteúdos e resumos organizados por período histórico, com mapas, infográficos e exercícios. Útil para pesquisa guiada em sala, revisão de conteúdos e atividades de interpretação de fontes.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">todamateria.com.br</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.museudapessoa.org','_blank')">
+        <span class="recurso-tipo tipo-site">Arquivo</span>
+        <div>
+          <div class="recurso-nome">Museu da Pessoa</div>
+          <div class="recurso-desc">Acervo de histórias de vida de brasileiros comuns — depoimentos em vídeo, áudio e texto. Excelente para trabalhar história local, memória, identidade cultural e diversidade.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">museudapessoa.org</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.brasiliana.usp.br','_blank')">
+        <span class="recurso-tipo tipo-site">Arquivo</span>
+        <div>
+          <div class="recurso-nome">Brasiliana USP</div>
+          <div class="recurso-desc">Acervo digital com documentos históricos, fotografias e mapas do Brasil. Ótimo para atividades com fontes primárias, análise de imagens históricas e pesquisa sobre história do Brasil.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">brasiliana.usp.br</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+    </div>
+
+    <div class="atividade-box">
+      <h3>💡 Sugestão de Atividade</h3>
+      <p><strong>Tour Virtual em Museus:</strong> Use o Google Arts & Culture projetado na TV para fazer um passeio virtual por um museu histórico relevante ao conteúdo da aula. Os alunos anotam observações e depois debatem o que viram. Possibilidade de dividir grupos nos computadores para exploração autônoma.</p>
+    </div>
+
+    <div class="bncc-conn">
+      🔗 <strong>Conexão BNCC Computação:</strong> Pesquisa em fontes digitais desenvolve Mundo Digital (pesquisa, seleção e avaliação de informações online) e Cultura Digital (compreensão crítica da informação histórica na internet).
+    </div>
+  </section>
+
+  <!-- GEOGRAFIA -->
+  <section class="section" id="geografia">
+    <div class="disc-header">
+      <div class="disc-emoji">🌍</div>
+      <div>
+        <h2>Geografia</h2>
+        <p>Explore o mundo, analise mapas e compreenda o espaço geográfico.</p>
+      </div>
+    </div>
+
+    <div class="recursos-list">
+      <div class="recurso-card" onclick="window.open('https://earth.google.com','_blank')">
+        <span class="recurso-tipo tipo-ferramenta">Ferramenta</span>
+        <div>
+          <div class="recurso-nome">Google Earth</div>
+          <div class="recurso-desc">Visualização do planeta em 3D com imagens de satélite, relevo, oceanos e expedições virtuais. Permite sobrevoos por regiões, análise de relevo e comparação temporal de paisagens. Disponível no navegador, sem instalação.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">earth.google.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.ibge.gov.br/geociencias/downloads-geociencias.html','_blank')">
+        <span class="recurso-tipo tipo-site">Dados Oficiais</span>
+        <div>
+          <div class="recurso-nome">IBGE – Dados e Mapas</div>
+          <div class="recurso-desc">Portal do IBGE com mapas interativos, dados populacionais, econômicos e ambientais do Brasil. Excelente para atividades de análise de dados, cartografia e desenvolvimento regional.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">ibge.gov.br</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.climatempo.com.br','_blank')">
+        <span class="recurso-tipo tipo-site">Site</span>
+        <div>
+          <div class="recurso-nome">Climatempo</div>
+          <div class="recurso-desc">Dados climáticos em tempo real para qualquer região do Brasil e do mundo. Útil para trabalhar clima, tempo atmosférico, biomas e mudanças climáticas com dados reais e atualizados.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">climatempo.com.br</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.worldometers.info/pt/','_blank')">
+        <span class="recurso-tipo tipo-site">Dados em Tempo Real</span>
+        <div>
+          <div class="recurso-nome">Worldometers</div>
+          <div class="recurso-desc">Contadores em tempo real de população mundial, nascimentos, mortes, consumo de energia, CO2 e muito mais. Impactante para aulas sobre crescimento populacional, desenvolvimento sustentável e desigualdades globais.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">worldometers.info/pt</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+    </div>
+
+    <div class="atividade-box">
+      <h3>💡 Sugestão de Atividade</h3>
+      <p><strong>Expedição Virtual com Google Earth:</strong> Divida os alunos em grupos e peça que cada um "viaje" para um bioma brasileiro diferente no Google Earth. Cada grupo descreve o relevo, vegetação e hidrografia que observou. Apresentam para a turma, que constrói coletivamente um painel comparativo projetado na TV.</p>
+    </div>
+
+    <div class="bncc-conn">
+      🔗 <strong>Conexão BNCC Computação:</strong> Uso de geotecnologias desenvolve Mundo Digital (uso de dados e sistemas de informação geográfica) e Pensamento Computacional (análise de dados reais para tomada de decisão).
+    </div>
+  </section>
+
+  <!-- INGLÊS -->
+  <section class="section" id="ingles">
+    <div class="disc-header">
+      <div class="disc-emoji">🇬🇧</div>
+      <div>
+        <h2>Língua Inglesa</h2>
+        <p>Pratique o idioma com ferramentas que tornam o aprendizado imersivo.</p>
+      </div>
+    </div>
+
+    <div class="recursos-list">
+      <div class="recurso-card" onclick="window.open('https://www.duolingo.com','_blank')">
+        <span class="recurso-tipo tipo-jogo">Jogo / App</span>
+        <div>
+          <div class="recurso-nome">Duolingo</div>
+          <div class="recurso-desc">Aplicativo gamificado de inglês com lições curtas de vocabulário, gramática e pronúncia. Funciona no navegador sem instalação. Pode ser usado como atividade de aquecimento ou reforço — os alunos criam contas gratuitas.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">duolingo.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://pt.khanacademy.org/humanities/grammar','_blank')">
+        <span class="recurso-tipo tipo-plataforma">Plataforma</span>
+        <div>
+          <div class="recurso-nome">Khan Academy – Gramática Inglesa</div>
+          <div class="recurso-desc">Módulos de gramática inglesa com explicações e exercícios. Ótimo para trabalhar estruturas gramaticais de forma sistemática com apoio visual e exemplos contextualizados.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">pt.khanacademy.org</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://learnenglish.britishcouncil.org','_blank')">
+        <span class="recurso-tipo tipo-site">Site</span>
+        <div>
+          <div class="recurso-nome">British Council – Learn English</div>
+          <div class="recurso-desc">Portal do British Council com jogos, vídeos, podcasts e exercícios de inglês. Organizado por nível (A1 ao C2). Excelente para atividades de listening, reading e speaking com temas do cotidiano.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">learnenglish.britishcouncil.org</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.youtube.com/user/EngVid','_blank')">
+        <span class="recurso-tipo tipo-video">Vídeo</span>
+        <div>
+          <div class="recurso-nome">EngVid (YouTube)</div>
+          <div class="recurso-desc">Canal do YouTube com centenas de videoaulas de inglês organizadas por nível e tema. Ideal para exibição coletiva no projetor ou para atividades de compreensão auditiva.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">youtube.com/@EngVid</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+    </div>
+
+    <div class="atividade-box">
+      <h3>💡 Sugestão de Atividade</h3>
+      <p><strong>Missão Duolingo:</strong> Reserve 20 minutos do início da aula no laboratório para que todos os alunos completem uma lição no Duolingo. Ao final, discuta coletivamente o vocabulário aprendido, conectando com o conteúdo gramatical da unidade. Funciona como motivação e aquecimento.</p>
+    </div>
+
+    <div class="bncc-conn">
+      🔗 <strong>Conexão BNCC Computação:</strong> Uso de plataformas de idiomas desenvolve Mundo Digital (comunicação em redes globais) e Cultura Digital (compreensão de que a língua inglesa é porta de entrada para o mundo digital global).
+    </div>
+  </section>
+
+  <!-- ARTES -->
+  <section class="section" id="artes">
+    <div class="disc-header">
+      <div class="disc-emoji">🎨</div>
+      <div>
+        <h2>Artes</h2>
+        <p>Crie, explore e conecte arte com tecnologia e cultura.</p>
+      </div>
+    </div>
+
+    <div class="recursos-list">
+      <div class="recurso-card" onclick="window.open('https://artsandculture.google.com/?hl=pt-BR','_blank')">
+        <span class="recurso-tipo tipo-site">Museu Virtual</span>
+        <div>
+          <div class="recurso-nome">Google Arts & Culture</div>
+          <div class="recurso-desc">Explore obras de arte em altíssima resolução, faça tours virtuais em museus como o MoMA, Louvre e Pinacoteca de SP. Inclui filtros por estilo artístico, período, artista e cor dominante. Cria conexões visuais poderosas.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">artsandculture.google.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.canva.com','_blank')">
+        <span class="recurso-tipo tipo-ferramenta">Ferramenta</span>
+        <div>
+          <div class="recurso-nome">Canva</div>
+          <div class="recurso-desc">Plataforma de design gráfico com centenas de templates. Os alunos podem criar cartazes, colagens digitais, capas de álbum, identidades visuais e muito mais. Ótimo para integrar análise de elementos visuais com criação artística.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">canva.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.made-in-brazil.com.br/','_blank')">
+        <span class="recurso-tipo tipo-site">Site</span>
+        <div>
+          <div class="recurso-nome">Itaú Cultural</div>
+          <div class="recurso-desc">Enciclopédia das artes brasileiras com verbetes sobre artistas, movimentos e obras. Excelente para pesquisas sobre arte brasileira, cultura popular, música, teatro e cinema.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">enciclopedia.itaucultural.org.br</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://musicbrainz.org','_blank')">
+        <span class="recurso-tipo tipo-ferramenta">Ferramenta</span>
+        <div>
+          <div class="recurso-nome">Chrome Music Lab</div>
+          <div class="recurso-desc">Ferramenta interativa do Google para explorar sons, ritmos e melodias visualmente. Os alunos experimentam como ondas sonoras funcionam, criam composições e visualizam a música. Perfeito para aulas de música e artes visuais integradas.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span></div>
+          <div class="recurso-link">musiclab.chromeexperiments.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+    </div>
+
+    <div class="atividade-box">
+      <h3>💡 Sugestão de Atividade</h3>
+      <p><strong>Curadoria Digital:</strong> Proponha que os alunos criem uma "exposição virtual" no Canva ou Google Apresentações, escolhendo e comentando obras que representem um movimento artístico estudado. Cada grupo apresenta sua curadoria para a turma — desenvolvendo análise crítica, expressão e linguagem visual.</p>
+    </div>
+
+    <div class="bncc-conn">
+      🔗 <strong>Conexão BNCC Computação:</strong> Criação de conteúdo digital artístico desenvolve Cultura Digital (autoria, criatividade e expressão no ambiente digital) e Mundo Digital (uso ético de imagens e direitos autorais).
+    </div>
+  </section>
+
+  <!-- ED. FÍSICA -->
+  <section class="section" id="edufisica">
+    <div class="disc-header">
+      <div class="disc-emoji">⚽</div>
+      <div>
+        <h2>Educação Física</h2>
+        <p>Tecnologia a serviço do corpo, do esporte e do bem-estar.</p>
+      </div>
+    </div>
+
+    <div class="recursos-list">
+      <div class="recurso-card" onclick="window.open('https://www.youtube.com/@Sportv','_blank')">
+        <span class="recurso-tipo tipo-video">Vídeo</span>
+        <div>
+          <div class="recurso-nome">Documentários Esportivos (YouTube)</div>
+          <div class="recurso-desc">Documentários sobre história do esporte, atletas olímpicos brasileiros, paraolimpíadas e esportes radicais. Excelentes para reflexões sobre valores olímpicos, inclusão, superação e cultura esportiva — exibidos na TV.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">youtube.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.cob.org.br','_blank')">
+        <span class="recurso-tipo tipo-site">Site</span>
+        <div>
+          <div class="recurso-nome">COB – Comitê Olímpico Brasileiro</div>
+          <div class="recurso-desc">Portal com informações sobre modalidades esportivas, atletas brasileiros, história das Olimpíadas e materiais educativos. Ótimo para pesquisa e apresentações sobre esporte, saúde e cultura olímpica.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">cob.org.br</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.canva.com','_blank')">
+        <span class="recurso-tipo tipo-ferramenta">Ferramenta</span>
+        <div>
+          <div class="recurso-nome">Canva – Infográficos de Saúde</div>
+          <div class="recurso-desc">Use o Canva para que os alunos criem infográficos sobre alimentação saudável, hidratação, benefícios de atividades físicas, lesões esportivas e prevenção. Integra pesquisa, design e conteúdo de saúde.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">canva.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.google.com/maps','_blank')">
+        <span class="recurso-tipo tipo-ferramenta">Ferramenta</span>
+        <div>
+          <div class="recurso-nome">Google Maps – Mapeamento de Espaços</div>
+          <div class="recurso-desc">Os alunos mapeiam espaços de lazer e prática esportiva na cidade de Florianópolis e arredores. Ótimo para discutir direito ao lazer, acessibilidade, mobilidade urbana e desigualdades no acesso ao esporte.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">maps.google.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+    </div>
+
+    <div class="atividade-box">
+      <h3>💡 Sugestão de Atividade</h3>
+      <p><strong>Pesquisa de Modalidade Esportiva:</strong> Cada grupo pesquisa uma modalidade esportiva olímpica ou paralímpica pouco conhecida — regras, história, principais atletas brasileiros e requisitos físicos. Apresentam para a turma com suporte de slides ou vídeo. Ao final, votam na modalidade que gostariam de experimentar.</p>
+    </div>
+
+    <div class="bncc-conn">
+      🔗 <strong>Conexão BNCC Computação:</strong> Pesquisa e produção de conteúdo sobre esporte desenvolve Mundo Digital (coleta e análise de informações) e Cultura Digital (uso responsável de dados e imagens na internet).
+    </div>
+  </section>
+
+  <!-- ENSINO RELIGIOSO -->
+  <section class="section" id="religioso">
+    <div class="disc-header">
+      <div class="disc-emoji">🙏</div>
+      <div>
+        <h2>Ensino Religioso</h2>
+        <p>Explore a diversidade religiosa, culturas e filosofias de vida com respeito e curiosidade.</p>
+      </div>
+    </div>
+
+    <div class="recursos-list">
+      <div class="recurso-card" onclick="window.open('https://artsandculture.google.com/?hl=pt-BR','_blank')">
+        <span class="recurso-tipo tipo-site">Museu Virtual</span>
+        <div>
+          <div class="recurso-nome">Google Arts & Culture – Espiritualidade e Arte Sacra</div>
+          <div class="recurso-desc">Explore obras de arte sacra, arquitetura religiosa e manifestações espirituais de diferentes culturas ao redor do mundo. Permite comparar tradições religiosas de forma visual e respeitosa, conectando arte, história e espiritualidade.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">artsandculture.google.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.museudapessoa.org','_blank')">
+        <span class="recurso-tipo tipo-site">Arquivo</span>
+        <div>
+          <div class="recurso-nome">Museu da Pessoa – Memória e Espiritualidade</div>
+          <div class="recurso-desc">Acervo de histórias de vida de brasileiros com depoimentos sobre fé, tradições familiares e práticas religiosas. Excelente para trabalhar diversidade religiosa, memória cultural e o papel da espiritualidade na identidade das pessoas.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">museudapessoa.org</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.youtube.com/@TVCultura','_blank')">
+        <span class="recurso-tipo tipo-video">Vídeo</span>
+        <div>
+          <div class="recurso-nome">TV Cultura e TV Escola – Documentários sobre Religiões</div>
+          <div class="recurso-desc">Documentários e programas educativos sobre diferentes tradições religiosas brasileiras: candomblé, catolicismo popular, protestantismo, espiritismo, religiões indígenas e outras. Abordagem plural, respeitosa e culturalmente rica.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">youtube.com/@TVCultura</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.canva.com','_blank')">
+        <span class="recurso-tipo tipo-ferramenta">Ferramenta</span>
+        <div>
+          <div class="recurso-nome">Canva – Infográficos de Diversidade Religiosa</div>
+          <div class="recurso-desc">Ferramenta para que os alunos criem infográficos, cartazes e apresentações comparando símbolos, práticas, datas comemorativas e valores de diferentes religiões e filosofias de vida presentes no Brasil. Promove respeito e diálogo inter-religioso.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Iniciais</span><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">canva.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+    </div>
+
+    <div class="atividade-box">
+      <h3>💡 Sugestão de Atividade</h3>
+      <p><strong>Mapa das Religiões do Brasil:</strong> Os alunos pesquisam no laboratório as principais tradições religiosas brasileiras e constroem coletivamente um painel digital comparativo com símbolos, origens, práticas e datas importantes. Usando o Google Apresentações ou Canva, cada grupo apresenta uma tradição — promovendo respeito, curiosidade e diálogo intercultural.</p>
+    </div>
+
+    <div class="bncc-conn">
+      🔗 <strong>Conexão BNCC Computação:</strong> Pesquisa e produção de conteúdo digital sobre diversidade religiosa desenvolve Cultura Digital (uso ético e responsável da internet) e Mundo Digital (avaliação crítica de informações religiosas online, combate à intolerância e desinformação).
+    </div>
+  </section>
+
+  <!-- SOCIOLOGIA -->
+  <section class="section" id="sociologia">
+    <div class="disc-header">
+      <div class="disc-emoji">🔭</div>
+      <div>
+        <h2>Sociologia</h2>
+        <p>Analise a sociedade com dados reais, documentários e ferramentas de pesquisa.</p>
+      </div>
+    </div>
+
+    <div class="recursos-list">
+      <div class="recurso-card" onclick="window.open('https://www.ibge.gov.br/estatisticas/sociais.html','_blank')">
+        <span class="recurso-tipo tipo-site">Dados Oficiais</span>
+        <div>
+          <div class="recurso-nome">IBGE – Estatísticas Sociais</div>
+          <div class="recurso-desc">Portal oficial com dados sobre população, desigualdade, educação, trabalho, raça, gênero e condições de vida no Brasil. Essencial para aulas sobre estratificação social, desigualdade, políticas públicas e movimentos sociais — com dados reais e atualizados.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">ibge.gov.br/estatisticas/sociais</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://cafecomsociologia.com','_blank')">
+        <span class="recurso-tipo tipo-site">Blog Educativo</span>
+        <div>
+          <div class="recurso-nome">Café com Sociologia</div>
+          <div class="recurso-desc">Um dos maiores portais de Sociologia para o ensino médio do Brasil, premiado pelo MEC. Reúne textos, videoaulas, dinâmicas, podcasts, dicas de filmes e materiais didáticos gratuitos. Organizado por temas: trabalho, cultura, política, movimentos sociais e muito mais.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">cafecomsociologia.com</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.todamateria.com.br/sociologia/','_blank')">
+        <span class="recurso-tipo tipo-site">Site</span>
+        <div>
+          <div class="recurso-nome">Toda Matéria – Sociologia</div>
+          <div class="recurso-desc">Resumos, artigos e exercícios sobre os principais temas de Sociologia: Marx, Durkheim, Weber, desigualdade social, cultura, movimentos sociais, trabalho e cidadania. Bom recurso para pesquisa guiada e revisão de conteúdos com os alunos.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Anos Finais</span><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">todamateria.com.br/sociologia</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+      <div class="recurso-card" onclick="window.open('https://www.worldometers.info/pt/','_blank')">
+        <span class="recurso-tipo tipo-site">Dados em Tempo Real</span>
+        <div>
+          <div class="recurso-nome">Worldometers – Dados Sociais Globais</div>
+          <div class="recurso-desc">Contadores em tempo real de população, desigualdade, acesso à saúde, pobreza e outros indicadores sociais globais. Impactante para introduzir debates sobre desenvolvimento, direitos humanos, desigualdade entre países e globalização.</div>
+          <div class="recurso-etapas"><span class="etapa-tag">Ensino Médio</span></div>
+          <div class="recurso-link">worldometers.info/pt</div>
+        </div>
+        <span class="seta">›</span>
+      </div>
+    </div>
+
+    <div class="atividade-box">
+      <h3>💡 Sugestão de Atividade</h3>
+      <p><strong>Análise de Dados Sociais com IBGE:</strong> Divida os alunos em grupos e peça que cada um pesquise um indicador social no site do IBGE (desigualdade de renda, acesso à educação, diferenças regionais, etc.). Cada grupo organiza os dados em um gráfico ou infográfico no Canva ou Google Planilhas e apresenta suas conclusões para a turma — conectando teoria sociológica com dados da realidade brasileira.</p>
+    </div>
+
+    <div class="bncc-conn">
+      🔗 <strong>Conexão BNCC Computação:</strong> Análise de dados sociais reais desenvolve Pensamento Computacional (coleta, organização e interpretação de dados) e Cultura Digital (uso crítico de informações digitais para compreensão da realidade social e exercício da cidadania).
+    </div>
+  </section>
+
+  <!-- AGENDAR -->
+  <section class="section" id="agendar">
+    <div class="disc-header">
+      <div class="disc-emoji">📅</div>
+      <div>
+        <h2>Como usar o laboratório?</h2>
+        <p>O espaço é de todos — e estamos aqui para ajudar!</p>
+      </div>
+    </div>
+
+    <div class="agendar-box">
+      <h3>Para agendar uma aula no laboratório:</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <p>Escolha o conteúdo que deseja trabalhar e o recurso digital mais adequado (use esta cartilha!).</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <p>Converse com o <strong>professor orientador de tecnologias digitais</strong> com antecedência para verificar a disponibilidade do laboratório.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <p>Juntos, vamos planejar a aula para que os recursos sejam usados da melhor forma com sua turma.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <p>No dia, o laboratório estará preparado — equipamentos ligados, sites acessíveis e suporte disponível durante toda a aula.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="agendar-box" style="border-top: 4px solid var(--amarelo);">
+      <h3 style="color: var(--cinza-escuro);">O que o professor orientador pode fazer por você:</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="background: var(--amarelo); color: var(--cinza-escuro);">✓</div>
+          <p>Ajudar a escolher os melhores recursos digitais para o seu conteúdo</p>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background: var(--amarelo); color: var(--cinza-escuro);">✓</div>
+          <p>Planejar atividades que integrem a computação ao componente curricular</p>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background: var(--amarelo); color: var(--cinza-escuro);">✓</div>
+          <p>Dar suporte técnico durante a aula para que você fique livre para ensinar</p>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background: var(--amarelo); color: var(--cinza-escuro);">✓</div>
+          <p>Indicar outros recursos e plataformas alinhados à BNCC e à sua turma</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bncc-conn" style="font-size: 0.92rem;">
+      🎯 <strong>Lembre-se:</strong> usar o laboratório junto com a sua disciplina não é "dar uma aula de informática". É enriquecer o aprendizado do seu conteúdo com o suporte da tecnologia — e contribuir para que os alunos desenvolvam as competências digitais previstas na BNCC da Computação.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-bandeira">
+    <!-- Bandeira de Santa Catarina em SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 60" width="72" height="48" style="display:block;border-radius:3px;box-shadow:0 1px 6px rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.15);" aria-label="Bandeira de Santa Catarina">
+      <!-- Faixa vermelha superior -->
+      <rect x="0" y="0" width="90" height="20" fill="#CC0000"/>
+      <!-- Faixa branca central -->
+      <rect x="0" y="20" width="90" height="20" fill="#FFFFFF"/>
+      <!-- Faixa vermelha inferior -->
+      <rect x="0" y="40" width="90" height="20" fill="#CC0000"/>
+      <!-- Losango verde-claro central -->
+      <polygon points="45,6 80,30 45,54 10,30" fill="#3CB371"/>
+      <!-- Texto SC no losango -->
+      <text x="45" y="35" text-anchor="middle" font-family="serif" font-size="13" font-weight="bold" fill="#FFFFFF" letter-spacing="1">SC</text>
+    </svg>
+    <span class="footer-sc-label">Santa Catarina</span>
+  </div>
+  <strong>Laboratório de Informática · Escola de Educação Básica Getúlio Vargas</strong><br>
+  <span style="margin-top: 8px; display: block;">Cartilha elaborada para apoio aos professores · Rede Estadual de Santa Catarina · BNCC Computação 2023</span>
+</footer>
+
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.nav-wrapper').offsetTop - 10, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
